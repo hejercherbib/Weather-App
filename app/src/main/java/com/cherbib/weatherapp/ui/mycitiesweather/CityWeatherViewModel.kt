@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class CityViewModel(application: Application) : AndroidViewModel(application) {
+class CityWeatherViewModel(application: Application) : AndroidViewModel(application) {
 
     private val cityRepository = CityRepository(getDatabase(application))
     private val weatherRepository = WeatherRepository(getDatabase(application))
@@ -44,9 +44,9 @@ class CityViewModel(application: Application) : AndroidViewModel(application) {
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(CityViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(CityWeatherViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return CityViewModel(app) as T
+                return CityWeatherViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

@@ -13,12 +13,12 @@ class CitesWeatherActivity : AppCompatActivity() {
 
     private var _binding: ActivityAddCityBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CityViewModel by lazy {
+    private val viewModel: CityWeatherViewModel by lazy {
         val activity = requireNotNull(this) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProvider(this, CityViewModel.Factory(activity.application))
-            .get(CityViewModel::class.java)
+        ViewModelProvider(this, CityWeatherViewModel.Factory(activity.application))
+            .get(CityWeatherViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

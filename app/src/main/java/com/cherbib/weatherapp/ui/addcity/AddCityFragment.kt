@@ -5,10 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.cherbib.weatherapp.R
+import com.cherbib.weatherapp.data.domain.City
+import com.cherbib.weatherapp.databinding.DialogFragmentAddCityBinding
 
 class AddCityFragment : DialogFragment() {
+    private var _binding: DialogFragmentAddCityBinding? = null
+    private val binding get() = _binding!!
+    lateinit var viewModel: CityViewModel
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState)
     }
@@ -18,27 +25,39 @@ class AddCityFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_fragment_add_city, container, false)
+        viewModel = ViewModelProvider(this).get(CityViewModel::class.java)
+        _binding = DialogFragmentAddCityBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAutoCompletCities()
     }
-
-    override fun onResume() {
-        super.onResume()
+    fun initAutoCompletCities() {
+        viewModel.allCities.observe(viewLifecycleOwner, {
+            setupSearchField(binding.autoCompleteTextViewCities, it)
+        })
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_NoActionBar)
     }
+    private fun setupSearchField(autoCompleteTxv: AutoCompleteTextView, cities: List<City>) {
+        activity?.let {
+            val cityAdapter = CityAdapter(it, R.layout.item_city, cities)
+            autoCompleteTxv.threshold = 2
+            autoCompleteTxv.setAdapter(cityAdapter)
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+            autoCompleteTxv.setOnItemClickListener(
+                { adapterView, view, position, l ->
+                }
+            )
+        }
     }
+    
+    fun initCitiesRcv(){
 
-    interface DialogListener {
-        fun onFinishEditDialog(inputText: String?)
     }
 }
