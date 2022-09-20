@@ -9,14 +9,16 @@ import com.cherbib.weatherapp.data.domain.City
 Just an example to set architecture (not final entity)
  */
 // Todo implement real entity
-@Entity
+@Entity(tableName = "city_entity")
 data class CityEntity constructor(
-    @PrimaryKey
-    val id: Long,
-    val name: String,
-    val longitude: String,
-    val latitude: String,
-    val temp: String
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val city: String,
+    val lat: Double,
+    val lng: Double,
+    val country: String,
+    val population: Long
+
 )
 
 /**
@@ -26,10 +28,11 @@ fun List<CityEntity>.asDomainModel(): List<City> {
     return map {
         City(
             id = it.id,
-            name = it.name,
-            latitude = it.latitude,
-            longitude = it.longitude,
-            temp = it.temp
+            city = it.city,
+            lat = it.lat,
+            lng = it.lng,
+            country = it.country,
+            population = it.population
         )
     }
 }
