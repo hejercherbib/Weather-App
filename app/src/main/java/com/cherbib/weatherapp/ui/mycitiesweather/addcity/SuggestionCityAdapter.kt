@@ -1,4 +1,4 @@
-package com.cherbib.weatherapp.ui.addcity
+package com.cherbib.weatherapp.ui.mycitiesweather.addcity
 
 import android.app.Activity
 import android.content.Context

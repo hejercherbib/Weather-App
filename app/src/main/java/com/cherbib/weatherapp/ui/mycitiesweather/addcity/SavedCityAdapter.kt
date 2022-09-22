@@ -1,4 +1,4 @@
-package com.cherbib.weatherapp.ui.addcity // ktlint-disable filename
+package com.cherbib.weatherapp.ui.mycitiesweather.addcity // ktlint-disable filename
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

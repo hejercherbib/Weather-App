@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cherbib.weatherapp.data.domain.WeatherDomain
 import com.cherbib.weatherapp.databinding.ItemWeatherBinding
 
-class CityWeatherAdapter :
-    ListAdapter<WeatherDomain, CityWeatherAdapter.ViewHolder>(
+class WeatherAdapter :
+    ListAdapter<WeatherDomain, WeatherAdapter.ViewHolder>(
         CityDiffCallback()
     ) {
 
@@ -30,6 +30,7 @@ class CityWeatherAdapter :
             with(binding) {
                 binding.txvCityName.text = weather.cityName
                 binding.txvCityCountry.text = weather.country
+                binding.txvCurrentTemp.text = weather.temp.toString()
             }
         }
     }

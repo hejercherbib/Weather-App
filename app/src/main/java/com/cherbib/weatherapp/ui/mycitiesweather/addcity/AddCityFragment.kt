@@ -1,4 +1,4 @@
-package com.cherbib.weatherapp.ui.addcity
+package com.cherbib.weatherapp.ui.mycitiesweather.addcity
 
 import android.app.Dialog
 import android.os.Bundle
@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cherbib.weatherapp.R
 import com.cherbib.weatherapp.data.domain.City
 import com.cherbib.weatherapp.databinding.DialogFragmentAddCityBinding
+import com.cherbib.weatherapp.ui.mycitiesweather.CityWeatherViewModel
 
 class AddCityFragment : DialogFragment(), AdapterOnClick {
     private lateinit var cityAdapter: SavedCityAdapter
     private var _binding: DialogFragmentAddCityBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: CityViewModel
+    lateinit var viewModel: CityWeatherViewModel
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState)
     }
@@ -27,7 +28,7 @@ class AddCityFragment : DialogFragment(), AdapterOnClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(CityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CityWeatherViewModel::class.java)
         _binding = DialogFragmentAddCityBinding.inflate(inflater, container, false)
         initSavedCitiesRcv()
         val view = binding.root

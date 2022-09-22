@@ -5,31 +5,30 @@ import androidx.lifecycle.*
 import com.cherbib.weatherapp.data.database.WeatherDatabase.Companion.getDatabase
 import com.cherbib.weatherapp.data.domain.City
 import com.cherbib.weatherapp.data.repository.CityRepository
+import com.cherbib.weatherapp.data.repository.SavedCityRepository
 import com.cherbib.weatherapp.data.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 class CityWeatherViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val cityRepository = CityRepository(getDatabase(application))
     private val weatherRepository = WeatherRepository(getDatabase(application))
-
+    private val cityRepository = CityRepository(getDatabase(application))
     val allCities = cityRepository.cities
     val weathers = weatherRepository.savedCityWeathers
+    private val savedCityRepository = SavedCityRepository(getDatabase(application))
+    val allSavedCities = savedCityRepository.cities
 
-    private val _allCities = MutableLiveData<List<City>>()
-
-    init {
-        // Todo implement fetching weather based on saved cities
-    }
-
-    // Todo  delete this just used for test
     fun insertCity(city: City) {
         viewModelScope.launch(Dispatchers.IO) {
-            cityRepository.insertCity(city)
+            savedCityRepository.insertCity(city)
         }
         refreshDataFromRepository(city)
+    }
+    fun deleteCity(city: City) {
+        viewModelScope.launch(Dispatchers.IO) {
+            savedCityRepository.deleteCity(city)
+        }
     }
 
     private fun refreshDataFromRepository(city: City) {

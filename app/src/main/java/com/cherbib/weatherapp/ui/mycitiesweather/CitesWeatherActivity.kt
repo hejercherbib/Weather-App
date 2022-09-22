@@ -6,17 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cherbib.weatherapp.databinding.ActivityAddCityBinding
-import com.cherbib.weatherapp.ui.addcity.AddCityFragment
+import com.cherbib.weatherapp.ui.mycitiesweather.addcity.AddCityFragment
 
 class CitesWeatherActivity : AppCompatActivity() {
-    private lateinit var cityWeatherAdapter: CityWeatherAdapter
+    private lateinit var weatherAdapter: WeatherAdapter
 
     private var _binding: ActivityAddCityBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CityWeatherViewModel by lazy {
-        val activity = requireNotNull(this) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
+        val activity = requireNotNull(this)
         ViewModelProvider(this, CityWeatherViewModel.Factory(activity.application))
             .get(CityWeatherViewModel::class.java)
     }
@@ -26,13 +24,6 @@ class CitesWeatherActivity : AppCompatActivity() {
         _binding = ActivityAddCityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.weathers.observe(this) { cityWeather ->
-            // Update the cached copy of the words in the adapter.
-            cityWeather.let {
-                Log.i("featched weathers=", cityWeather.toString())
-                cityWeatherAdapter.submitList(it)
-            }
-        }
         binding.btnAddCity.setOnClickListener {
             addCity()
         }
@@ -40,10 +31,16 @@ class CitesWeatherActivity : AppCompatActivity() {
     }
 
     fun initializeRecycleView() {
-        cityWeatherAdapter = CityWeatherAdapter()
-        binding.rcvMyCities.adapter = cityWeatherAdapter
+        weatherAdapter = WeatherAdapter()
+        binding.rcvMyCities.adapter = weatherAdapter
         binding.rcvMyCities.layoutManager = LinearLayoutManager(this)
-        // Todo submit fetched list
+        viewModel.weathers.observe(this) { cityWeather ->
+            // Update the cached copy of the words in the adapter.
+            cityWeather.let {
+                Log.i("featched weathers=", cityWeather.toString())
+                weatherAdapter.submitList(it)
+            }
+        }
     }
     fun addCity() {
         val dialogFragment = AddCityFragment()
