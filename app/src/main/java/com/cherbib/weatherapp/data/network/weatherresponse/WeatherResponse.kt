@@ -1,4 +1,4 @@
-package com.cherbib.weatherapp.data.network.weatherresponse
+package com.cherbib.weatherapp.data.network.weatherresponse // ktlint-disable filename
 
 import com.cherbib.weatherapp.data.database.entities.WeatherEntity
 import com.cherbib.weatherapp.data.domain.WeatherDomain

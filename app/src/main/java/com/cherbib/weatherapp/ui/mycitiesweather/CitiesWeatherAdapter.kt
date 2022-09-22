@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.cherbib.weatherapp.data.domain.WeatherDomain
-import com.cherbib.weatherapp.databinding.ItemCityBinding
+import com.cherbib.weatherapp.databinding.ItemWeatherBinding
 
 class CityWeatherAdapter :
     ListAdapter<WeatherDomain, CityWeatherAdapter.ViewHolder>(
@@ -15,7 +15,7 @@ class CityWeatherAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemCityBinding.inflate(inflater, parent, false)
+        val binding = ItemWeatherBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
@@ -24,19 +24,18 @@ class CityWeatherAdapter :
     }
 
     class ViewHolder(
-        private val binding: ItemCityBinding
+        private val binding: ItemWeatherBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(weather: WeatherDomain) {
             with(binding) {
                 binding.txvCityName.text = weather.cityName
-                binding.txvCityTemp.text = weather.temp.toString()
+                binding.txvCityCountry.text = weather.country
             }
         }
     }
 }
 
 private class CityDiffCallback : DiffUtil.ItemCallback<WeatherDomain>() {
-
     override fun areItemsTheSame(
         oldItem: WeatherDomain,
         newItem: WeatherDomain

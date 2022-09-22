@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.cherbib.weatherapp.R
 import com.cherbib.weatherapp.data.domain.City
 
-class CityAdapter(
+class SuggestionCityAdapter(
     private val mContext: Context,
     private val mLayoutResourceId: Int,
     cities: List<City>

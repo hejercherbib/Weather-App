@@ -3,16 +3,27 @@ package com.cherbib.weatherapp.data.database // ktlint-disable filename
 import android.content.Context
 import androidx.room.* // ktlint-disable no-wildcard-imports
 import com.cherbib.weatherapp.data.database.dao.CityDao
+import com.cherbib.weatherapp.data.database.dao.SavedCityDao
 import com.cherbib.weatherapp.data.database.dao.WeatherDao
 import com.cherbib.weatherapp.data.database.entities.CityEntity
+import com.cherbib.weatherapp.data.database.entities.SavedCityEntity
 import com.cherbib.weatherapp.data.database.entities.WeatherEntity
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = arrayOf(CityEntity::class, WeatherEntity::class), version = 1, exportSchema = false)
+@Database(
+    entities = arrayOf(
+        CityEntity::class,
+        WeatherEntity::class,
+        SavedCityEntity::class
+    ),
+    version = 4,
+    exportSchema = false
+)
 public abstract class WeatherDatabase : RoomDatabase() {
 
     abstract fun cityDao(): CityDao
     abstract fun weatherDao(): WeatherDao
+    abstract fun savedCityDao(): SavedCityDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -29,7 +40,8 @@ public abstract class WeatherDatabase : RoomDatabase() {
                     WeatherDatabase::class.java,
                     "weather_database"
                 )
-                    .createFromAsset("database/db_prepopulated_with_cities.db")
+                    .createFromAsset("database/weather_database_new.db")
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance

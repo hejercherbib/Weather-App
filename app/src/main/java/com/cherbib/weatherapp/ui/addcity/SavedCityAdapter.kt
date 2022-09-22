@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cherbib.weatherapp.data.domain.City
 import com.cherbib.weatherapp.databinding.ItemCityBinding
 
-class SavedCityAdapter :
+public class SavedCityAdapter(private val adapterOnClick: AdapterOnClick) :
     ListAdapter<City, SavedCityAdapter.ViewHolder>(
         CityDiffCallback()
     ) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCityBinding.inflate(inflater, parent, false)
@@ -20,16 +19,19 @@ class SavedCityAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), adapterOnClick)
     }
 
     class ViewHolder(
         private val binding: ItemCityBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(city: City) {
+        fun bind(city: City, callback: AdapterOnClick) {
             with(binding) {
                 binding.txvCityName.text = city.city
-                binding.txvCityTemp.text = city.id.toString()
+                binding.txvCityCountry.text = city.country
+                binding.imgDelete.setOnClickListener {
+                    callback.onDeleteClick(city)
+                }
             }
         }
     }
@@ -50,4 +52,8 @@ private class CityDiffCallback : DiffUtil.ItemCallback<City>() {
     ): Boolean {
         return oldItem.id == newItem.id
     }
+}
+
+interface AdapterOnClick {
+    fun onDeleteClick(item: City)
 }

@@ -9,7 +9,7 @@ interface CityDao {
     @Query("select * from city_entity")
     fun getCities(): LiveData<List<CityEntity>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCity(city: CityEntity)
 
     @Delete
