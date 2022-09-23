@@ -1,5 +1,6 @@
 package com.cherbib.weatherapp.ui.mycitiesweather.addcity
 
+import SuggestionCityAdapter
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
