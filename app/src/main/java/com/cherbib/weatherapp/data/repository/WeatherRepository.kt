@@ -21,7 +21,7 @@ class WeatherRepository(private val database: WeatherDatabase) {
 
     suspend fun getWeather(lat: Double, long: Double) {
         withContext(Dispatchers.IO) {
-            val weatherResponse = RetrofitClient.retrofitService.getWeatherByLocation(lat.toString(), long.toString())
+            val weatherResponse = RetrofitClient.retrofitService.getWeatherByLocation(lat.toString(), long.toString(), "Metric")
             database.weatherDao().insert(weatherResponse.asDatabaseModel())
         }
     }

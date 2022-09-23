@@ -10,6 +10,8 @@ interface WeatherService {
         @Query("lat")
         latitude: String,
         @Query("lon")
-        longitude: String
+        longitude: String,
+        @Query("units")
+        unit: String
     ): WeatherRes
 }

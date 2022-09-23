@@ -30,7 +30,7 @@ class WeatherAdapter :
             with(binding) {
                 binding.txvCityName.text = weather.cityName
                 binding.txvCityCountry.text = weather.country
-                binding.txvCurrentTemp.text = weather.temp.toString()
+                binding.txvCurrentTemp.text = weather.temp.toString() + "°"
             }
         }
     }
