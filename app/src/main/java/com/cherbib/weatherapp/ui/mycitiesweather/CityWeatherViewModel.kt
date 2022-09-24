@@ -28,6 +28,7 @@ class CityWeatherViewModel(application: Application) : AndroidViewModel(applicat
     fun deleteCity(city: City) {
         viewModelScope.launch(Dispatchers.IO) {
             savedCityRepository.deleteCity(city)
+            deleteWeather(city)
         }
     }
 
@@ -35,6 +36,16 @@ class CityWeatherViewModel(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch {
             try {
                 weatherRepository.getWeather(city.lat, city.lng)
+            } catch (networkError: IOException) {
+                // Show a Toast error message and hide the progress bar.
+            }
+        }
+    }
+
+    private fun deleteWeather(city: City) {
+        viewModelScope.launch {
+            try {
+                weatherRepository.deleteWeather(city)
             } catch (networkError: IOException) {
                 // Show a Toast error message and hide the progress bar.
             }

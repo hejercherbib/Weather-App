@@ -13,8 +13,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="36dp"
-        android:text="Ajouter une ville"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
+        android:text="+  Ajouter une ville"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_my_cities"

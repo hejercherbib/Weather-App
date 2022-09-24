@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.cherbib.weatherapp.data.database.WeatherDatabase
 import com.cherbib.weatherapp.data.database.entities.asDomainModel
+import com.cherbib.weatherapp.data.domain.City
 import com.cherbib.weatherapp.data.domain.WeatherDomain
 import com.cherbib.weatherapp.data.network.RetrofitClient
 import com.cherbib.weatherapp.data.network.weatherresponse.asDatabaseModel
@@ -17,6 +18,12 @@ import kotlinx.coroutines.withContext
 class WeatherRepository(private val database: WeatherDatabase) {
     val savedCityWeathers: LiveData<List<WeatherDomain>> = Transformations.map(database.weatherDao().getWeather()) {
         it.asDomainModel()
+    }
+
+    suspend fun deleteWeather(city: City) {
+        withContext(Dispatchers.IO) {
+            database.weatherDao().deleteWeather(city.lat, city.lng)
+        }
     }
 
     suspend fun getWeather(lat: Double, long: Double) {
